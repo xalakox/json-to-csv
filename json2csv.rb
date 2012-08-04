@@ -34,7 +34,7 @@ def tocsv(row,heads)
 		begin
 			val = eval(exec)
 			if val.class.to_s == "String"
-				val = '"' + val.sub('"','""') + '"'
+				val = '"' + val.gsub('"','""') + '"'
 			end
 		rescue Exception => exc
 			
