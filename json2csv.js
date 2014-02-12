@@ -63,7 +63,7 @@ if (process.argv.length==4){
 			headers = _.uniq(headers.concat(header.split(",")));
 			//headers = _.uniq(headers);
 		}
-		var data = headers.join(",");
+		var data = headers.join(",")+"\n";;
 		for (var k in json.rows){
 			data += tocsv(json.rows[k],headers)+"\n";
 		}
