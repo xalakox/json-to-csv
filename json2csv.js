@@ -31,7 +31,7 @@ var getheaders = function (name,value,parent){
 var tocsv = function (row,heads){
 	var ret = "", exec = "", val = "";
 	for (var x in heads){
-		exec = "row"+x;
+		exec = "row"+heads[x];
 		val = "";
 		try {
 			val = eval(exec);
@@ -43,6 +43,7 @@ var tocsv = function (row,heads){
 		}
 		ret += val+",";
 	}
+	if (ret.slice(-1)==",") ret = ret.substring(0, ret.length - 1);
 	return ret;
 };
 if (process.argv.length==4){
@@ -55,15 +56,16 @@ if (process.argv.length==4){
 		}
 		var headers = [];
 		var json = JSON.parse(filedata);
-		for (var k in json){
-			var header = getheaders("",json[k],"");
+		//var headers = getheaders("",json,"");
+		for (var k in json.rows){
+			var header = getheaders("",json.rows[k],"");
 			if (header.slice(-1)==",") header = header.substring(0, header.length - 1);
-			headers = _.uniq((headers + header).split(","));
+			headers = _.uniq(headers.concat(header.split(",")));
+			//headers = _.uniq(headers);
 		}
-		console.log(headers);process.exit(1);
 		var data = headers.join(",");
-		for (var k in json){
-			data += tocsv(data,headers);
+		for (var k in json.rows){
+			data += tocsv(json.rows[k],headers)+"\n";
 		}
 		fs.writeFile(process.argv[3],data,function(err){
 			if (err){
