@@ -1,0 +1,10 @@
+{
+    "name": "json-to-csv",
+    "description": "Json to CSV Converter",
+    "version": "0.0.1",
+    "private": true,
+    "main": "json2csv.js",
+    "dependencies": {
+        "underscore": ""
+    }
+}
